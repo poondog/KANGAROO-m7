@@ -582,13 +582,6 @@ static ssize_t mtp_read(struct file *fp, char __user *buf,
 	dev->state = STATE_BUSY;
 	spin_unlock_irq(&dev->lock);
 
-	
-	if (count > MTP_BULK_BUFFER_SIZE) {
-		file_xfer_zlp_flag = 1;
-		
-		mtp_qos_enable(1);
-	}
-
 	while (count > 0) {
 		if (dev->state == STATE_CANCELED) {
 			list_for_each_entry_safe(req, tmp_req, &dev->rx_busy, list) {
