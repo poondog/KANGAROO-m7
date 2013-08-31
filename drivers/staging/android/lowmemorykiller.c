@@ -226,6 +226,12 @@ static int lowmem_shrink(struct shrinker *s, struct shrink_control *sc)
 			     p->pid, p->comm, selected_oom_adj, oom_score_adj, tasksize);
 	}
 	if (selected) {
+		if (fatal_signal_pending(selected)) {
+			pr_warning("process %d is suffering a slow death\n",
+			     selected->pid);
+			read_unlock(&tasklist_lock);
+			return rem;
+		}
 		lowmem_print(1, "[%s] send sigkill to %d (%s), oom_adj %d, score_adj %d,"
 			" min_score_adj %d, size %dK, free %dK, file %dK, fork_boost %dK\n",
 			     current->comm, selected->pid, selected->comm,
