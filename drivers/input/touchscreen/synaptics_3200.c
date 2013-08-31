@@ -222,6 +222,7 @@ static void sweep2wake_presspwr(struct work_struct * sweep2wake_presspwr_work) {
 
 	if (!pocket_mode || pocket_detect == 0) {
 		if (wakesleep_vib) {
+		        vibrate(15);
 			wakesleep_vib = 0;
 		}
 
@@ -304,6 +305,7 @@ static void logo2wake_longtap_count(struct work_struct * logo2wake_longtap_count
 			pocket_mode = power_key_check_in_pocket();
 
 		if (!pocket_mode || pocket_detect == 0) {
+			vibrate(15);
 			input_event(sweep2wake_pwrdev, EV_KEY, KEY_POWER, 1);
 			input_sync(sweep2wake_pwrdev);
 			msleep(100);
