@@ -551,7 +551,7 @@ static int rmnet_function_bind_config(struct android_usb_function *f,
 		}
 	}
 
-	return err;
+	return err = 0;
 }
 
 static int rmnet_function_init(struct android_usb_function *f,
